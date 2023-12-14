@@ -4,6 +4,8 @@ t2evenv
 *.txt
 .DS_Store
 *.png
+tests/test_output.txt
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

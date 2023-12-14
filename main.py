@@ -4,6 +4,7 @@ import argparse
 from ebooklib import epub
 
 # 正则表达式匹配中文章节标题
+# CHAPTER_REGEX = r'^(.*第[\u4e00-\u9fa5零一二三四五六七八九十百千万0-9]+章.*)$'
 CHAPTER_REGEX = r'(第[\u4e00-\u9fa5零一二三四五六七八九十百千万0-9]+章)'
 
 def read_file(file_path):
@@ -16,8 +17,8 @@ def read_file(file_path):
         return None
 
 def clean_lines(lines):
-    """去除每行的前导空白并返回清洗后的文本。"""
-    return [line.lstrip() for line in lines]
+    """去除行前空白和空白行并返回文本。"""
+    return [line.lstrip() for line in lines if line.strip()]
 
 def process_text(lines):
     """处理文本，将章节标题分隔并返回处理后的文本。"""
@@ -92,9 +93,9 @@ def main():
     title = os.path.splitext(os.path.basename(args.input))[0]
     output_path = os.path.join(os.path.dirname(args.input), title + '.epub')
     
-    identifier = input('请输入书籍ID（例如：id123456）：') or 'id123456'
-    language = input('请输入书籍语言（例如：zh-CN）：') or 'zh-CN'
-    author = input('请输入作者名字（例如：无名）：') or '无名'
+    identifier = input('请输入书籍ID(例如：id123456): ') or 'id123456'
+    language = input('请输入书籍语言(例如：zh-CN): ') or 'zh-CN'
+    author = input('请输入作者名字(例如：无名): ') or '无名'
     
     book = create_book(identifier, title, language, author, args.cover_image)
     if book is None:
